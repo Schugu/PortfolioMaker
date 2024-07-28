@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import TitleInput from "./TitleInput.tsx";
 import { FormData, TitleInputErrors } from "@/types/types.ts";
 import SocialInput from "./SocialInput.tsx";
+import SkillsInput from "./SkillsInput.tsx";
 
 export default function Home() {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
