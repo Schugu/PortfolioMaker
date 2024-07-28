@@ -3,9 +3,9 @@ import DownloadJson from "@/components/DownloadJson.tsx";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import TitleInput from "./TitleInput.tsx";
-import { FormData, TitleInputErrors } from "@/types/types.ts";
 import SocialInput from "./SocialInput.tsx";
 import SkillsInput from "./SkillsInput.tsx";
+import { FormData } from "@/types/types.ts";
 
 export default function Home() {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
@@ -39,8 +39,7 @@ export default function Home() {
 
         <TitleInput
           register={register}
-          setValue={setValue} // Pasa setValue al componente TitleInput
-          errors={errors.titles as TitleInputErrors["titles"]} // Asegúrate de que el tipo sea correcto
+          setValue={setValue}
         />
 
         <div className="flex flex-col gap-2 w-full">
@@ -70,6 +69,16 @@ export default function Home() {
             <p className="text-sm text-red-500">Falta ingresar la nacionalidad.</p>
           )}
         </div>
+
+
+        <SocialInput
+          register={register}
+          setValue={setValue}
+        />
+
+        <SkillsInput
+          setValue={setValue}
+        />
 
         <button type="submit" className="bg-blue-500 text-white rounded-lg p-2">Enviar</button>
       </form>
