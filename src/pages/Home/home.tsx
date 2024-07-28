@@ -85,6 +85,20 @@ export default function Home() {
           </button>
         </div>
 
+        <div className="flex flex-col gap-2 w-full">
+          <label htmlFor="years" className="text-3xl">Años:</label>
+          <input
+            id="years"
+            className="block w-full p-2.5 text-2xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="number"
+            {...register('years', { required: true, min: 12, max: 99 })}
+            placeholder="24 años"
+          />
+          {errors.years && (
+            <p className="text-sm text-red-500">Edad inválida.</p>
+          )}
+        </div>
+
     </section>
   );
 }
