@@ -116,6 +116,7 @@ export default function Home() {
         <button type="submit" className="bg-blue-500 text-white rounded-lg p-2">Enviar</button>
       </form>
 
+      <DownloadJson data={dataJSON} />
     </section>
   );
 }
