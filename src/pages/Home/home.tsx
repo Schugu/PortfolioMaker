@@ -1,7 +1,7 @@
-// Home.tsx
-import DownloadJson from "@/components/DownloadJson.tsx";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useForm, SubmitHandler } from "react-hook-form";
+import JSZip from "jszip";
+import { saveAs } from "file-saver";
 import TitleInput from "./TitleInput.tsx";
 import SocialInput from "./SocialInput.tsx";
 import SkillsInput from "./SkillsInput.tsx";
@@ -9,28 +9,71 @@ import WorkExperienceInput from "./WorkExperienceInput.tsx";
 import AboutMeInput from "./AboutMeInput.tsx";
 import HobbiesInput from "./HobbiesInput.tsx";
 import TextContactInput from "./TextContactInput.tsx";
-
 import LinksAndImagesInput from "./LinksAndImagesInput.tsx";
 import { FormData } from "@/types/types.ts";
-
-import DownloadFiles from "@/components/DownloadFiles.tsx";
 
 export default function Home() {
   const { register, handleSubmit, formState: { errors }, setValue } = useForm<FormData>();
   const [dataJSON, setDataJSON] = useState({});
+  const [media, setMedia] = useState<{ profilePicture: File | null; cv: File | null; certificates: File[] }>({
+    profilePicture: null,
+    cv: null,
+    certificates: []
+  });
 
-  const onSubmit = handleSubmit(data => {
+  const handleProfilePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setMedia((prevState) => ({
+        ...prevState,
+        profilePicture: event.target.files![0]
+      }));
+    }
+  };
+
+  const handleCVChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setMedia((prevState) => ({
+        ...prevState,
+        cv: event.target.files![0]
+      }));
+    }
+  };
+
+  const handleDownloadAllMedia = async () => {
+    const zip = new JSZip();
+    const profileFolder = zip.folder("profile");
+    const educationFolder = profileFolder?.folder("education");
+
+    if (media.profilePicture) {
+      profileFolder?.file('profilePicture.png', media.profilePicture);
+    }
+
+    if (media.cv) {
+      profileFolder?.file('CV.pdf', media.cv);
+    }
+
+    media.certificates.forEach((file, index) => {
+      educationFolder?.file(`${index + 1}.png`, file);
+    });
+
+    profileFolder?.file('profile.json', JSON.stringify(dataJSON, null, 2));
+
+    const content = await zip.generateAsync({ type: "blob" });
+    saveAs(content, "profile.zip");
+  };
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
     const dataValid = {
       ...data,
       profilePicture: "/profile/profilePicture.png"
     };
     console.log(dataValid);
     setDataJSON(dataValid);
-  });
+  };
 
   return (
     <section className="w-full h-full p-2 flex flex-col gap-20">
-      <form className='w-1/2 flex flex-col items-center gap-3.5' onSubmit={onSubmit}>
+      <form className='w-1/2 flex flex-col items-center gap-3.5' onSubmit={handleSubmit(onSubmit)}>
         <div className="flex flex-col gap-2 w-full">
           <label htmlFor="fullName" className="text-3xl">Nombre y apellido:</label>
           <input
@@ -45,10 +88,7 @@ export default function Home() {
           )}
         </div>
 
-        <TitleInput
-          register={register}
-          setValue={setValue}
-        />
+        <TitleInput register={register} setValue={setValue} />
 
         <div className="flex flex-col gap-2 w-full">
           <label htmlFor="years" className="text-3xl">Años:</label>
@@ -84,14 +124,9 @@ export default function Home() {
 
         <TextContactInput setValue={setValue} />
 
-        <SocialInput
-          register={register}
-          setValue={setValue}
-        />
+        <SocialInput register={register} setValue={setValue} />
 
-        <SkillsInput
-          setValue={setValue}
-        />
+        <SkillsInput setValue={setValue} />
 
         <WorkExperienceInput setValue={setValue} />
 
@@ -120,12 +155,8 @@ export default function Home() {
         </div>
 
         <button type="submit" className="bg-blue-500 text-white rounded-lg p-2">Enviar</button>
+        <button type="button" onClick={handleDownloadAllMedia} className="mt-4 p-2 bg-blue-500 text-white rounded-lg">Descargar Todos los Medios</button>
       </form>
-
-      <DownloadJson data={dataJSON} />
-
-      <DownloadFiles />
-
     </section>
   );
 }
