@@ -16,4 +16,5 @@ export type FormData = {
     tasks: string[];
     infoLink: string;
   }>;
+  aboutMe: string[];
 };

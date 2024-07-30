@@ -6,6 +6,7 @@ import TitleInput from "./TitleInput.tsx";
 import SocialInput from "./SocialInput.tsx";
 import SkillsInput from "./SkillsInput.tsx";
 import WorkExperienceInput from "./WorkExperienceInput.tsx";
+import AboutMeInput from "./AboutMeInput.tsx";
 import { FormData } from "@/types/types.ts";
 
 export default function Home() {
@@ -70,6 +71,8 @@ export default function Home() {
             <p className="text-sm text-red-500">Falta ingresar la nacionalidad.</p>
           )}
         </div>
+
+        <AboutMeInput setValue={setValue} />
 
 
         <SocialInput
