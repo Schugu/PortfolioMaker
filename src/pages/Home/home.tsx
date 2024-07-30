@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import TitleInput from "./TitleInput.tsx";
 import SocialInput from "./SocialInput.tsx";
 import SkillsInput from "./SkillsInput.tsx";
+import WorkExperienceInput from "./WorkExperienceInput.tsx";
 import { FormData } from "@/types/types.ts";
 
 export default function Home() {
@@ -79,6 +80,10 @@ export default function Home() {
         <SkillsInput
           setValue={setValue}
         />
+
+        <WorkExperienceInput setValue={setValue} />
+
+
 
         <button type="submit" className="bg-blue-500 text-white rounded-lg p-2">Enviar</button>
       </form>
