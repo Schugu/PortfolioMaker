@@ -8,6 +8,8 @@ import SkillsInput from "./SkillsInput.tsx";
 import WorkExperienceInput from "./WorkExperienceInput.tsx";
 import AboutMeInput from "./AboutMeInput.tsx";
 import HobbiesInput from "./HobbiesInput.tsx";
+import TextContactInput from "./TextContactInput.tsx";
+
 import { FormData } from "@/types/types.ts";
 
 export default function Home() {
@@ -77,6 +79,7 @@ export default function Home() {
 
         <HobbiesInput setValue={setValue} />
 
+        <TextContactInput setValue={setValue} />
 
         <SocialInput
           register={register}
