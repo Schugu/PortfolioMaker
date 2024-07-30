@@ -95,6 +95,18 @@ export default function Home() {
 
         <WorkExperienceInput setValue={setValue} />
 
+        <LinksAndImagesInput setValue={setValue} setMedia={setMedia} media={media} />
+
+        <div className="flex flex-col gap-2 w-full">
+          <label htmlFor="profilePicture" className="text-3xl">Foto de perfil:</label>
+          <input
+            id="profilePicture"
+            className="block w-full p-2.5 text-2xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="file"
+            accept="image/*"
+            onChange={handleProfilePictureChange}
+          />
+        </div>
 
 
         <button type="submit" className="bg-blue-500 text-white rounded-lg p-2">Enviar</button>
