@@ -17,4 +17,5 @@ export type FormData = {
     infoLink: string;
   }>;
   aboutMe: string[];
+  hobbies: string[];
 };
