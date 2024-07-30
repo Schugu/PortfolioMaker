@@ -10,6 +10,7 @@ import AboutMeInput from "./AboutMeInput.tsx";
 import HobbiesInput from "./HobbiesInput.tsx";
 import TextContactInput from "./TextContactInput.tsx";
 
+import LinksAndImagesInput from "./LinksAndImagesInput.tsx";
 import { FormData } from "@/types/types.ts";
 
 import DownloadFiles from "@/components/DownloadFiles.tsx";

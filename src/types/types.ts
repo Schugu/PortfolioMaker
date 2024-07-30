@@ -19,4 +19,5 @@ export type FormData = {
   aboutMe: string[];
   hobbies: string[];
   textContact: string[];
+  certificates: string[]; 
 };
