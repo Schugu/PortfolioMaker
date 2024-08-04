@@ -7,7 +7,7 @@ interface Step2Props {
   prevStep: () => void;
 }
 
-const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
+export default function Step2({ nextStep, prevStep }: Step2Props) {
   const { register, setValue, handleSubmit, formState: { errors }, getValues } = useFormContext<FormData>();
   const [aboutMe, setAboutMe] = useState<string[]>(getValues("aboutMe") || ['']);
   const [hobbies, setHobbies] = useState<string[]>(getValues("hobbies") || ['']);
@@ -200,6 +200,4 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
       </div>
     </form>
   );
-};
-
-export default Step2;
+}
