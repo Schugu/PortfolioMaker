@@ -1,15 +1,20 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useFormContext } from 'react-hook-form';
+import { FormData } from "@/types/types.ts";
 
 interface Step1Props {
   nextStep: () => void;
 }
 
-const Step1: React.FC<Step1Props> = ({ nextStep }) => {
-  const { register, handleSubmit, formState: { errors } } = useFormContext();
-  const [titles, setTitles] = useState<string[]>(['']);
+export default function Step1({ nextStep }: Step1Props) {
+  const { register, handleSubmit, formState: { errors }, setValue, getValues } = useFormContext<FormData>();
+  const [titles, setTitles] = useState<string[]>(getValues("titles") || ['']);
 
-  const onSubmit = (data: any) => {
+  useEffect(() => {
+    setValue("titles", titles);
+  }, [titles, setValue]);
+
+  const onSubmit = (data: FormData) => {
     console.log(data); // Muestra los datos en la consola
     nextStep();
   };
@@ -19,13 +24,14 @@ const Step1: React.FC<Step1Props> = ({ nextStep }) => {
   };
 
   const removeTitle = (index: number) => {
-    setTitles(titles.filter((_, i) => i !== index));
+    const newTitles = titles.filter((_, i) => i !== index);
+    setTitles(newTitles);
   };
 
   const handleTitleChange = (index: number, value: string) => {
-    const updatedTitles = [...titles];
-    updatedTitles[index] = value;
-    setTitles(updatedTitles);
+    const newTitles = [...titles];
+    newTitles[index] = value;
+    setTitles(newTitles);
   };
 
   return (
@@ -97,7 +103,7 @@ const Step1: React.FC<Step1Props> = ({ nextStep }) => {
                 onChange={(e) => handleTitleChange(index, e.target.value)}
                 placeholder="Desarrollador Front-End"
               />
-              {titles.length > 1 && (
+              {index > 0 && (
                 <button
                   type="button"
                   onClick={() => removeTitle(index)}
@@ -120,6 +126,4 @@ const Step1: React.FC<Step1Props> = ({ nextStep }) => {
       <button type="submit" className="mt-2 p-2 bg-green-500 text-white rounded-lg">Siguiente</button>
     </form>
   );
-};
-
-export default Step1;
+}
