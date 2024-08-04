@@ -11,6 +11,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
   const { register, setValue, handleSubmit, formState: { errors } } = useFormContext<FormData>();
   const [aboutMe, setAboutMe] = useState<string[]>(['']);
   const [hobbies, setHobbies] = useState<string[]>(['']);
+  const [textContact, setTextContact] = useState<string[]>(['']);
 
   useEffect(() => {
     setValue("aboutMe", aboutMe);
@@ -19,6 +20,10 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
   useEffect(() => {
     setValue("hobbies", hobbies);
   }, [hobbies, setValue]);
+
+  useEffect(() => {
+    setValue("textContact", textContact);
+  }, [textContact, setValue]);
 
   const handleAddDescription = () => {
     setAboutMe([...aboutMe, '']);
@@ -48,6 +53,21 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
     const newHobbies = [...hobbies];
     newHobbies[index] = value;
     setHobbies(newHobbies);
+  };
+
+  const handleAddText = () => {
+    setTextContact([...textContact, '']);
+  };
+
+  const handleRemoveText = (index: number) => {
+    const newTextContact = textContact.filter((_, i) => i !== index);
+    setTextContact(newTextContact);
+  };
+
+  const handleChangeText = (index: number, value: string) => {
+    const newTextContact = [...textContact];
+    newTextContact[index] = value;
+    setTextContact(newTextContact);
   };
 
   const onSubmit = (data: FormData) => {
@@ -133,6 +153,42 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
         </button>
       </section>
 
+      <section className="w-full flex flex-col gap-2 mt-4">
+        <label className="text-2xl">Texto de Contacto:</label>
+        {textContact.map((text, index) => (
+          <div key={index} className="flex flex-col gap-2">
+            <div className="flex items-center gap-2">
+              <textarea
+                id={`textContact.${index}`}
+                className="block w-full p-2.5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Texto de Contacto"
+                {...register(`textContact.${index}`, { required: "Este campo es obligatorio" })}
+                value={text}
+                onChange={(e) => handleChangeText(index, e.target.value)}
+              />
+              {index > 0 && (
+                <button
+                  type="button"
+                  onClick={() => handleRemoveText(index)}
+                  className="p-2 bg-red-500 text-white rounded-lg"
+                >
+                  Eliminar
+                </button>
+              )}
+            </div>
+            {errors.textContact && errors.textContact[index] && (
+              <p className="text-sm text-red-500">{errors.textContact[index]?.message}</p>
+            )}
+          </div>
+        ))}
+        <button
+          type="button"
+          onClick={handleAddText}
+          className="mt-2 p-2 bg-blue-500 text-white rounded-lg"
+        >
+          Agregar Texto de Contacto
+        </button>
+      </section>
     </form>
   );
 };
