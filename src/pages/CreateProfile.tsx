@@ -13,9 +13,8 @@ export default function CreateProfile() {
   const methods = useForm<FormData>({
     defaultValues: {
       fullName: '',
-      years: 0,
       nacionality: '',
-      titles: []
+      titles: ['']
     }
   });
 
@@ -34,8 +33,8 @@ export default function CreateProfile() {
 
   const steps = [
     <Step1 nextStep={nextStep} />,
-    <Step2 nextStep={nextStep} prevStep={prevStep} />,
-    <Step3 prevStep={prevStep} handleSubmit={methods.handleSubmit(handleSubmit)} />
+    <Step2 prevStep={prevStep} nextStep={nextStep} />,
+    <Step3 prevStep={prevStep} nextStep={nextStep} />
   ];
 
   return (
