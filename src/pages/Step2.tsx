@@ -189,6 +189,15 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
           Agregar Texto de Contacto
         </button>
       </section>
+
+      <div className="mt-4 flex gap-2">
+        <button type="button" onClick={prevStep} className="p-2 bg-gray-500 text-white rounded-lg">
+          Anterior
+        </button>
+        <button type="submit" className="p-2 bg-green-500 text-white rounded-lg">
+          Siguiente
+        </button>
+      </div>
     </form>
   );
 };
