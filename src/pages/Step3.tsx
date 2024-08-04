@@ -1,10 +1,14 @@
-import { FC, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormData } from "@/types/types.ts";
 
-const Step3: FC<{ nextStep: () => void; prevStep: () => void }> = ({ nextStep, prevStep }) => {
-  const { setValue, handleSubmit, register } = useFormContext<FormData>();
-  const [socials, setSocials] = useState([{ name: '', link: '' }]);
+interface Step3Props {
+  nextStep: () => void;
+  prevStep: () => void;
+}
+
+
+export default function Step3({ nextStep, prevStep }: Step3Props) {
 
   useEffect(() => {
     const socialObject = socials.reduce((acc, { name, link }) => {
@@ -87,6 +91,7 @@ const Step3: FC<{ nextStep: () => void; prevStep: () => void }> = ({ nextStep, p
         >
           Agregar otra red social
         </button>
+
       </div>
       <div className="mt-4 flex gap-2">
         <button type="button" onClick={prevStep} className="p-2 bg-gray-500 text-white rounded-lg">
@@ -98,6 +103,4 @@ const Step3: FC<{ nextStep: () => void; prevStep: () => void }> = ({ nextStep, p
       </div>
     </form>
   );
-};
-
-export default Step3;
+}
