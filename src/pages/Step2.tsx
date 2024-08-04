@@ -8,10 +8,10 @@ interface Step2Props {
 }
 
 const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
-  const { register, setValue, handleSubmit, formState: { errors } } = useFormContext<FormData>();
-  const [aboutMe, setAboutMe] = useState<string[]>(['']);
-  const [hobbies, setHobbies] = useState<string[]>(['']);
-  const [textContact, setTextContact] = useState<string[]>(['']);
+  const { register, setValue, handleSubmit, formState: { errors }, getValues } = useFormContext<FormData>();
+  const [aboutMe, setAboutMe] = useState<string[]>(getValues("aboutMe") || ['']);
+  const [hobbies, setHobbies] = useState<string[]>(getValues("hobbies") || ['']);
+  const [textContact, setTextContact] = useState<string[]>(getValues("textContact") || ['']);
 
   useEffect(() => {
     setValue("aboutMe", aboutMe);
@@ -86,7 +86,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
             <div className="flex items-center gap-2">
               <textarea
                 id={`aboutMe.${index}`}
-                className="block w-full p-2.5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block w-full p-2.5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Descripción"
                 {...register(`aboutMe.${index}`, { required: "Este campo es obligatorio" })}
                 value={description}
@@ -123,7 +123,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
             <div className="flex items-center gap-2">
               <textarea
                 id={`hobbies.${index}`}
-                className="block w-full p-2.5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block w-full p-2.5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Hobby"
                 {...register(`hobbies.${index}`, { required: "Este campo es obligatorio" })}
                 value={hobby}
@@ -160,7 +160,7 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
             <div className="flex items-center gap-2">
               <textarea
                 id={`textContact.${index}`}
-                className="block w-full p-2.5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                className="block w-full p-2.5 text-xl bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                 placeholder="Texto de Contacto"
                 {...register(`textContact.${index}`, { required: "Este campo es obligatorio" })}
                 value={text}
