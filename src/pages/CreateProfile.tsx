@@ -14,7 +14,8 @@ export default function CreateProfile() {
     defaultValues: {
       fullName: '',
       nacionality: '',
-      titles: ['']
+      titles: [''],
+      linksSocialNetworks: { "": "" }
     }
   });
 
