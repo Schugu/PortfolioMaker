@@ -1,4 +1,3 @@
-import React from 'react';
 import { useState, useEffect } from "react";
 import { useFormContext } from "react-hook-form";
 import { FormData } from "@/types/types.ts";
@@ -6,23 +5,8 @@ import { FormData } from "@/types/types.ts";
 interface Step2Props {
   nextStep: () => void;
   prevStep: () => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  formData: {
-    name: string;
-    email: string;
-    age: string;
-    address: string;
-  };
 }
 
-const Step2: React.FC<Step2Props> = ({ nextStep, prevStep, handleChange, formData }) => {
-  const handleNext = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    // Validación del paso 2
-    if (!formData.email) {
-      alert('El email es obligatorio');
-      return;
-    }
 const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
   const { register, setValue, handleSubmit, formState: { errors } } = useFormContext<FormData>();
   const [aboutMe, setAboutMe] = useState<string[]>(['']);
@@ -49,17 +33,6 @@ const Step2: React.FC<Step2Props> = ({ nextStep, prevStep }) => {
   };
 
   return (
-    <form onSubmit={handleNext}>
-      <h2>Paso 2: Información de Contacto</h2>
-      <input
-        type="email"
-        name="email"
-        value={formData.email}
-        onChange={handleChange}
-        placeholder="Email"
-      />
-      <button type="button" onClick={prevStep}>Anterior</button>
-      <button type="submit">Siguiente</button>
     <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-2 items-center">
       <h2>Paso 2: Información Personal</h2>
 
