@@ -30,25 +30,23 @@ export default function Step6({ nextStep, prevStep, media, setMedia }: Step6Prop
 
   useEffect(() => {
     const links = certificates.map(item => item.link);
-    setValue("certificates", links); // Guarda los enlaces en el contexto del formulario
+    setValue("certificates", links); 
 
     const certificateFiles = certificates.map(item => item.image).filter(image => image !== null) as File[];
-    setMedia(prevMedia => ({ ...prevMedia, certificates: certificateFiles })); // Actualiza el estado de media
+    setMedia(prevMedia => ({ ...prevMedia, certificates: certificateFiles })); 
   }, [certificates, setValue, setMedia]);
 
-  // Manejador de cambios para la foto de perfil
   const handleProfilePictureChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const file = event.target.files[0];
-      setMedia(prevMedia => ({ ...prevMedia, profilePicture: file })); // Guardar solo en media
+      setMedia(prevMedia => ({ ...prevMedia, profilePicture: file })); 
     }
   };
 
-  // Manejador de cambios para el CV
   const handleCVChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files) {
       const file = event.target.files[0];
-      setMedia(prevMedia => ({ ...prevMedia, cv: file })); // Guardar solo en media
+      setMedia(prevMedia => ({ ...prevMedia, cv: file })); 
     }
   };
 
@@ -75,13 +73,13 @@ export default function Step6({ nextStep, prevStep, media, setMedia }: Step6Prop
 
   const handleChangeProfilePicture = () => {
     if (profilePictureInputRef.current) {
-      profilePictureInputRef.current.click(); // Abre el input de archivo
+      profilePictureInputRef.current.click();
     }
   };
 
   const handleChangeCV = () => {
     if (cvInputRef.current) {
-      cvInputRef.current.click(); // Abre el input de archivo
+      cvInputRef.current.click(); 
     }
   };
 
@@ -93,16 +91,14 @@ export default function Step6({ nextStep, prevStep, media, setMedia }: Step6Prop
       return;
     }
 
-    // Verificar si hay algún enlace de certificado con imagen
     const hasInvalidCertificates = certificates.some(cert => cert.link && !cert.image);
     if (hasInvalidCertificates) {
       setError("Por favor, añade una imagen para cada enlace de certificado.");
       return;
     }
 
-    // Permitir el envío si no hay certificados ingresados
     if (certificatesLinks.every(link => link === '') && certificates.every(cert => !cert.image)) {
-      setError(null); // No hay errores si no hay certificados
+      setError(null);
       nextStep();
       return;
     }
@@ -122,7 +118,6 @@ export default function Step6({ nextStep, prevStep, media, setMedia }: Step6Prop
     <form onSubmit={handleSubmit(onSubmit)} className="w-full flex flex-col gap-2 items-center">
       <h2>Paso 6: Certificados</h2>
 
-      {/* Foto de perfil */}
       <div className="flex flex-col gap-2 w-full">
         <label htmlFor="profilePicture" className="text-3xl">Foto de perfil:</label>
         {media.profilePicture ? (
@@ -151,11 +146,11 @@ export default function Step6({ nextStep, prevStep, media, setMedia }: Step6Prop
           type="file"
           accept="image/*"
           onChange={handleProfilePictureChange}
-          className="hidden" // Esconde el input del archivo
+          className="hidden" 
         />
       </div>
 
-      {/* CV */}
+  
       <div className="flex flex-col gap-2 w-full">
         <label htmlFor="cv" className="text-3xl">CV:</label>
         {media.cv ? (
@@ -184,11 +179,10 @@ export default function Step6({ nextStep, prevStep, media, setMedia }: Step6Prop
           type="file"
           accept=".pdf"
           onChange={handleCVChange}
-          className="hidden" // Esconde el input del archivo
+          className="hidden" 
         />
       </div>
 
-      {/* Certificados */}
       <div className="flex flex-col gap-4 w-full">
         <label className="text-3xl">Certificados:</label>
         {certificates.map((item, index) => (
