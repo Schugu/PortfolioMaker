@@ -19,5 +19,11 @@ export type FormData = {
   aboutMe: string[];
   hobbies: string[];
   textContact: string[];
-  certificates: string[]; 
+  certificates: string[];
 };
+
+export type MediaTypes = {
+  profilePicture: File | null;
+  cv: File | null;
+  certificates: File[];
+}

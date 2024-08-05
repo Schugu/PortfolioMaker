@@ -1,18 +1,13 @@
 import { useState, useEffect, useRef } from "react";
 import { useFormContext } from "react-hook-form";
-import { FormData } from "@/types/types.ts";
+import { FormData, MediaTypes } from "@/types/types.ts";
 
-interface Media {
-  profilePicture: File | null;
-  cv: File | null;
-  certificates: File[];
-}
 
 interface Step6Props {
   nextStep: () => void;
   prevStep: () => void;
-  setMedia: React.Dispatch<React.SetStateAction<Media>>;
-  media: Media;
+  setMedia: React.Dispatch<React.SetStateAction<MediaTypes>>;
+  media: MediaTypes;
 }
 
 export default function Step6({ nextStep, prevStep, media, setMedia }: Step6Props) {
