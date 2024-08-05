@@ -7,6 +7,7 @@ import Step2 from './Step2.tsx';
 import Step3 from './Step3.tsx';
 import Step4 from './Step4.tsx';
 import Step5 from './Step5.tsx';
+import Step6 from './Step6.tsx';
 import StepIndicator from './StepIndicator.tsx';
 
 
@@ -19,6 +20,11 @@ export default function CreateProfile() {
       titles: [''],
       linksSocialNetworks: { "": "" }
     }
+  });
+  const [media, setMedia] = useState<{ profilePicture: File | null; cv: File | null; certificates: File[] }>({
+    profilePicture: null,
+    cv: null,
+    certificates: []
   });
 
   const nextStep = () => {
@@ -40,6 +46,7 @@ export default function CreateProfile() {
     <Step3 prevStep={prevStep} nextStep={nextStep} />,
     <Step4 prevStep={prevStep} nextStep={nextStep} />,
     <Step5 prevStep={prevStep} nextStep={nextStep} />,
+    <Step6 prevStep={prevStep} nextStep={nextStep} media={media} setMedia={setMedia}/>,
   ];
 
   return (
