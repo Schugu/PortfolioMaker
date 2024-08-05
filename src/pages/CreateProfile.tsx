@@ -1,5 +1,8 @@
 import { useState } from 'react';
-import { useForm, FormProvider } from 'react-hook-form';
+import { useForm, FormProvider, SubmitHandler } from 'react-hook-form';
+import JSZip from 'jszip';
+import { saveAs } from 'file-saver';
+import { MediaTypes } from "@/types/types.ts";
 
 import { FormData } from "@/types/types.ts";
 import Step1 from './Step1.tsx';
@@ -8,20 +11,18 @@ import Step3 from './Step3.tsx';
 import Step4 from './Step4.tsx';
 import Step5 from './Step5.tsx';
 import Step6 from './Step6.tsx';
+import Step7 from './Step7.tsx';
 import StepIndicator from './StepIndicator.tsx';
-
 
 export default function CreateProfile() {
   const [currentStep, setCurrentStep] = useState<number>(1);
   const methods = useForm<FormData>({
     defaultValues: {
-      fullName: '',
-      nacionality: '',
       titles: [''],
       linksSocialNetworks: { "": "" }
     }
   });
-  const [media, setMedia] = useState<{ profilePicture: File | null; cv: File | null; certificates: File[] }>({
+  const [media, setMedia] = useState<MediaTypes>({
     profilePicture: null,
     cv: null,
     certificates: []
@@ -35,9 +36,35 @@ export default function CreateProfile() {
     setCurrentStep((prev) => prev - 1);
   };
 
-  const handleSubmit = (data: FormData) => {
-    // Lógica de envío del formulario completo
-    console.log(data);
+  const handleDownloadAllMedia = async (data: FormData) => {
+    const zip = new JSZip();
+    const profileFolder = zip.folder("profile");
+    const educationFolder = profileFolder?.folder("education");
+
+    if (media.profilePicture) {
+      profileFolder?.file('profilePicture.png', media.profilePicture);
+    }
+
+    if (media.cv) {
+      profileFolder?.file('CV.pdf', media.cv);
+    }
+
+    media.certificates.forEach((file, index) => {
+      educationFolder?.file(`${index + 1}.png`, file);
+    });
+
+    const dataValid = {
+      ...data,
+      profilePicture: "/profile/profilePicture.png"
+    };
+    profileFolder?.file('profile.json', JSON.stringify(dataValid, null, 2));
+
+    const content = await zip.generateAsync({ type: "blob" });
+    saveAs(content, "profile.zip");
+  };
+
+  const onSubmit: SubmitHandler<FormData> = (data) => {
+    handleDownloadAllMedia(data);
   };
 
   const steps = [
@@ -46,7 +73,8 @@ export default function CreateProfile() {
     <Step3 prevStep={prevStep} nextStep={nextStep} />,
     <Step4 prevStep={prevStep} nextStep={nextStep} />,
     <Step5 prevStep={prevStep} nextStep={nextStep} />,
-    <Step6 prevStep={prevStep} nextStep={nextStep} media={media} setMedia={setMedia}/>,
+    <Step6 prevStep={prevStep} nextStep={nextStep} media={media} setMedia={setMedia} />,
+    <Step7 prevStep={prevStep} handleSubmit={methods.handleSubmit(onSubmit)} />,
   ];
 
   return (
@@ -61,5 +89,3 @@ export default function CreateProfile() {
     </div>
   );
 }
-
-
