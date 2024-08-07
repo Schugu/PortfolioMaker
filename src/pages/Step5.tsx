@@ -97,7 +97,7 @@ export default function Step5({ nextStep, prevStep }: Step5Props) {
     setWorkExperience(newWorkExperience);
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = () => {
     const hasInvalidWorkExperience = workExperience.some((experience) => {
       return (
         experience.title === '' ||
@@ -117,7 +117,6 @@ export default function Step5({ nextStep, prevStep }: Step5Props) {
     }
 
     setError(null);
-    console.log(data);
     nextStep();
   };
 

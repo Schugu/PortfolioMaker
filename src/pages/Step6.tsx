@@ -104,8 +104,6 @@ export default function Step6({ nextStep, prevStep, media, setMedia }: Step6Prop
     }
 
     setError(null);
-    console.log("Media:", media);
-    console.log("Datos del formulario:", getValues());
     nextStep();
   };
 

@@ -56,7 +56,7 @@ export default function Step4({ nextStep, prevStep }: Step4Props) {
     setSkills([...skills, { category: '', items: [''] }]);
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = () => {
     const hasInvalidSkills = skills.some((skill) => {
       return skill.category === "" || (skill.category !== "" && skill.items.includes(""));
     });
@@ -67,7 +67,6 @@ export default function Step4({ nextStep, prevStep }: Step4Props) {
     }
 
     setError(null);
-    console.log(data);
     nextStep();
   };
 

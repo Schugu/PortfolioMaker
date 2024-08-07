@@ -14,8 +14,7 @@ export default function Step1({ nextStep }: Step1Props) {
     setValue("titles", titles);
   }, [titles, setValue]);
 
-  const onSubmit = (data: FormData) => {
-    console.log(data); // Muestra los datos en la consola
+  const onSubmit = () => {
     nextStep();
   };
 

@@ -70,8 +70,7 @@ export default function Step2({ nextStep, prevStep }: Step2Props) {
     setTextContact(newTextContact);
   };
 
-  const onSubmit = (data: FormData) => {
-    console.log(data);
+  const onSubmit = () => {
     nextStep();
   };
 

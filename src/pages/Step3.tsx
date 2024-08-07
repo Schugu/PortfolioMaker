@@ -60,7 +60,7 @@ export default function Step3({ nextStep, prevStep }: Step3Props) {
     setSocials(newSocials);
   };
 
-  const onSubmit = (data: FormData) => {
+  const onSubmit = () => {
     const hasInvalidSocials = socials.some((social) => {
       return social.name === "" || (social.name !== "" && social.link === "");
     });
@@ -71,7 +71,6 @@ export default function Step3({ nextStep, prevStep }: Step3Props) {
     }
 
     setError(null); 
-    console.log(data);
     nextStep();
   };
 
