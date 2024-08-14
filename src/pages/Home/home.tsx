@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 export default function home() {
   return (
-    <section className="w-full h-screen border-2 border-yellow-500 p-2 flex flex-col items-center gap-2">
+    <section className="w-full h-screen p-2 flex flex-col items-center gap-2">
       <h1>Seleccione una opción</h1>
 
       <article className="w-11/12 grid grid-cols-3 gap-10">

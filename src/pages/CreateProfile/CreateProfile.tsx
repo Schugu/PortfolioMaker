@@ -78,7 +78,7 @@ export default function CreateProfile() {
   ];
 
   return (
-    <div className='w-full min-h-screen flex flex-col items-center justify-center bg-blue-950'>
+    <div className='w-full min-h-screen flex flex-col items-center justify-center bg-blue-950 text-white'>
       <div className='w-11/12 my-10 flex-grow flex flex-col p-10 gap-4 justify-start items-center
       border-2 border-yellow-400 rounded'>
         <StepIndicator currentStep={currentStep} steps={steps.length} />
